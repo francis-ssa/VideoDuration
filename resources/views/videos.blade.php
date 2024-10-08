@@ -63,21 +63,22 @@
 </section>
 
 <script>
-    // Function to track the video and store the time in localStorage
     function trackVideo(videoId, videoKey) {
         const video = document.getElementById(videoId);
-        const savedTime = localStorage.getItem(videoKey) || 0;
+        const savedTime = localStorage.getItem(videoKey);
         
-        // Set video to saved time
-        video.currentTime = parseFloat(savedTime);
+        // Check if there is saved time and set the video to that time
+        if (savedTime) {
+            video.currentTime = parseFloat(savedTime);
+        }
 
-        // Save time to localStorage every second
+        // Save time to localStorage every second while the video is playing
         video.ontimeupdate = function() {
+            console.log(`Current Time for ${videoKey}: ${video.currentTime}`);
             localStorage.setItem(videoKey, video.currentTime);
         };
     }
 
-    // Track each video with a unique key
     document.addEventListener('DOMContentLoaded', function () {
         trackVideo('video1', 'video1-time');
         trackVideo('video2', 'video2-time');
