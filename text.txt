@@ -1,0 +1,161 @@
+@extends('app')
+
+@section('content')
+<header class="py-5">
+    <div class="container px-lg-5">
+        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+            <div class="m-4 m-lg-5">
+                <h1 class="display-5 fw-bold">Video Tracker</h1>
+                <p class="fs-4">
+                    Track video progress and resume where you left off.
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="pt-4">
+    <div class="container px-lg-5">
+        <div class="row gx-lg-5">
+            <!-- Video 1 -->
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
+                        <h2 class="fs-4 fw-bold">Video 1</h2>
+                        <iframe src="https://scormhero.com/#/go/2OixYwmCBx" width="320" height="240"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
+                        <h2 class="fs-4 fw-bold">Video 2</h2>
+                        <iframe src="https://scormhero.com/#/go/Spp6kr6QQW" width="320" height="240"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
+                        <h2 class="fs-4 fw-bold">Video 3</h2>
+                        <iframe src="https://scormhero.com/#/go/13smwrZnJg" width="320" height="240"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const videoFrames = [
+            { id: 'iframe1', key: 'video1_time' },
+            { id: 'iframe2', key: 'video2_time' },
+            { id: 'iframe3', key: 'video3_time' }
+        ];
+
+        videoFrames.forEach(frame => {
+            const iframe = document.getElementById(frame.id);
+            
+            // Track iframe content or listen for messages if SCORM Hero allows postMessage()
+            window.addEventListener('message', function(event) {
+                
+                // Check if message is from SCORM Hero and process the event
+                if (event.origin === 'https://scormhero.com') {
+                    const data = event.data;
+                    if (data.type === 'videoProgress') {
+                        localStorage.setItem(frame.key, data.currentTime);
+                    }
+                }
+            });
+        });
+    });
+</script>
+@endsection
+
+
+///////////////////////////////
+v2
+
+
+@extends('app')
+
+@section('content')
+<header class="py-5">
+    <div class="container px-lg-5">
+        <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
+            <div class="m-4 m-lg-5">
+                <h1 class="display-5 fw-bold">Video Tracker</h1>
+                <p class="fs-4">
+                    Track video progress and resume where you left off.
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="pt-4">
+    <div class="container px-lg-5">
+        <div class="row gx-lg-5">
+
+            {{-- use locally stored videos --}}
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
+                        <h2 class="fs-4 fw-bold">Video 1</h2>
+                        <video id="video1" width="100%" height="auto" controls>
+                            <source src="{{ asset('videos/v1.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            {{-- uses video downloaded from SCORM Hero --}}
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"></div>
+                        <h2 class="fs-4 fw-bold">Video 1</h2>
+                        <iframe src="{{ asset('v2/index.html') }}" width="100%" height="auto" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to track and store video time in localStorage
+    function TrackVideoProgress(videoId) {
+        const videoElement = document.getElementById(videoId);
+        const savedTime = localStorage.getItem(videoId + 'Time');
+
+        // Set video to saved time if available
+        if (savedTime) {
+            videoElement.currentTime = savedTime;
+        }
+
+        // Save current time to localStorage on time update
+        videoElement.addEventListener('timeupdate', function() {
+            localStorage.setItem(videoId + 'Time', videoElement.currentTime);
+        });
+    }
+
+    // Initialize video progress tracking for all videos
+    window.onload = function() {
+        TrackVideoProgress('video1');
+        TrackVideoProgress('video2');
+        TrackVideoProgress('video3');
+    };
+</script>
+@endsection
