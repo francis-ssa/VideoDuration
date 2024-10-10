@@ -16,7 +16,6 @@
     <div class="container px-lg-5">
         <div class="row gx-lg-5">
 
-            <!-- Video 1 -->
             <div class="col-lg-6 col-xxl-4 mb-5">
                 <div class="card bg-light border-0 h-100">
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
@@ -30,7 +29,6 @@
                 </div>
             </div>
 
-            <!-- Video 2 -->
             <div class="col-lg-6 col-xxl-4 mb-5">
                 <div class="card bg-light border-0 h-100">
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
@@ -44,7 +42,6 @@
                 </div>
             </div>
 
-            <!-- Video 3 -->
             <div class="col-lg-6 col-xxl-4 mb-5">
                 <div class="card bg-light border-0 h-100">
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
@@ -67,15 +64,20 @@
         const video = document.getElementById(videoId);
         const savedTime = localStorage.getItem(videoKey);
         
-        // Check if there is saved time and set the video to that time
         if (savedTime) {
             video.currentTime = parseFloat(savedTime);
         }
 
-        // Save time to localStorage every second while the video is playing
         video.ontimeupdate = function() {
             console.log(`Current Time for ${videoKey}: ${video.currentTime}`);
             localStorage.setItem(videoKey, video.currentTime);
+        };
+
+        video.onpause = function() {
+            const currentTime = video.currentTime.toFixed(2);
+            const recordedTimes = localStorage.getItem(videoKey + '-paused-time') || '';
+
+            localStorage.setItem(videoKey + '-paused-time', recordedTimes + (recordedTimes ? ', ' : '') + currentTime);
         };
     }
 
