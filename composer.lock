@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e8c3c14ff33b199b4a0838993eb8423",
+    "content-hash": "718ce8d4e30258bb1345e2a960584fef",
     "packages": [
         {
             "name": "brick/math",
@@ -3112,6 +3112,58 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "rustici-software/scormcloud-api-v2-client-php",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RusticiSoftware/scormcloud-api-v2-client-php.git",
+                "reference": "a0d54d245d7cc14c71cd06ed9420d119d5418c0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RusticiSoftware/scormcloud-api-v2-client-php/zipball/a0d54d245d7cc14c71cd06ed9420d119d5418c0a",
+                "reference": "a0d54d245d7cc14c71cd06ed9420d119d5418c0a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^7.3",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RusticiSoftware\\Cloud\\V2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rustici Software",
+                    "homepage": "https://rusticisoftware.com"
+                }
+            ],
+            "homepage": "https://github.com/RusticiSoftware/scormcloud-api-v2-client-php",
+            "keywords": [
+                "cloud",
+                "rustici",
+                "rusticisoftware",
+                "scorm",
+                "scormcloud",
+                "software"
+            ],
+            "support": {
+                "issues": "https://github.com/RusticiSoftware/scormcloud-api-v2-client-php/issues",
+                "source": "https://github.com/RusticiSoftware/scormcloud-api-v2-client-php/tree/v4.0.0"
+            },
+            "time": "2024-02-08T22:56:28+00:00"
         },
         {
             "name": "symfony/clock",
