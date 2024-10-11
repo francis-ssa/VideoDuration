@@ -7,6 +7,7 @@
             <div class="m-4 m-lg-5">
                 <h1 class="display-5 fw-bold">Video Tracker</h1>
                 <p class="fs-4">Track video progress and resume where you left off.</p>
+                <p class="fs-5"><a href="{{ route('scorm') }}">SCORM</a></p>
             </div>
         </div>
     </div>
@@ -69,15 +70,17 @@
         }
 
         video.ontimeupdate = function() {
-            console.log(`Current Time for ${videoKey}: ${video.currentTime}`);
             localStorage.setItem(videoKey, video.currentTime);
         };
 
         video.onpause = function() {
             const currentTime = video.currentTime.toFixed(2);
-            const recordedTimes = localStorage.getItem(videoKey + '-paused-time') || '';
-
-            localStorage.setItem(videoKey + '-paused-time', recordedTimes + (recordedTimes ? ', ' : '') + currentTime);
+            let pausedCount = localStorage.getItem(videoKey + '-paused-count') || 0;
+            pausedCount = parseInt(pausedCount) + 1;
+            
+            localStorage.setItem(videoKey + '-paused-count', pausedCount);
+            localStorage.setItem(videoKey + '-paused-time-' + pausedCount, currentTime);
+            
         };
     }
 
